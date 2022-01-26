@@ -11,16 +11,19 @@
 <body>
     <fieldset>
         <legend>Chiffrer</legend>
-        <input type="text" name="inputTextC" id="inputTextC" placeholder="Texte à chiffrer">
-        <input type="text" name="inputClefC" id="inputClefC" placeholder="Clef de chiffrement">
-        <button onclick="goChiffrer()">Chiffrer</button>
+        
+            <input type="text" name="inputTextC" id="inputTextC" placeholder="Texte à chiffrer">
+            <input type="text" name="inputClefC" id="inputClefC" placeholder="Clef de chiffrement">
+            <button onclick="goChiffrer()">Chiffrer</button>
+
+
         <div id="resultC"></div>
     </fieldset>
 
     <fieldset>
         <legend>Déchiffrer</legend>
-        <input type="text" name="inputTextD" id="inputTextD" placeholder="Texte à déchiffrer">
-        <input type="text" name="inputClefD" id="inputClefD" placeholder="Clef de déchiffrement">
+        <input type="text" name="inputTextD" id="inputTextD" placeholder="Texte à déchiffrer" required>
+        <input type="text" name="inputClefD" id="inputClefD" placeholder="Clef de déchiffrement" required>
         <button onclick="goDechiffrer()">Déchiffrer</button>
         <div id="resultD"></div>
     </fieldset>
@@ -28,34 +31,39 @@
 
     <script>
         //const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789";
-        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789'&$£€\"âäàéèêëîïöôûüùçÇ\\#{([-|`_^@)]=+}~¨¤%*µ?,;.:/!§°";
-        // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789'&\$£€\"âäàéèêëîïöôûüùçÇ\\#{([-|`_^@)]=+}~¨¤%*µ?,;.:/!§°
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'&$£€\"âäàéèêëîïöôûüùçÇ\\#{([-|`_^@)]=+}~¨¤%*µ?,;.:/!§°" + ' ';
+        // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789'&$£€\"âäàéèêëîïöôûüùçÇ\\#{([-|`_^@)]=+}~¨¤%*µ?,;.:/!§°
 
         
         function goChiffrer() {
             var inputText = document.getElementById('inputTextC').value;
             var inputClef = document.getElementById('inputClefC').value;
-            var clefRepete = clefSurLongueurInput(inputText, inputClef);
+           
+    
+            if(inputClef !== null && inputClef !== ''){
+                var clefRepete = clefSurLongueurInput(inputText, inputClef);
+                var listClefRepete = clefRepete.split('');
+                var listAlphabet = alphabet.split('');
+                var listInputText = inputText.split('');
+                //console.log(listInputText);
+                //console.log(listClefRepete);
+                chiffrer(listInputText, listClefRepete, listAlphabet);
+            }
             
-            var listClefRepete = clefRepete.split('');
-            var listAlphabet = alphabet.split('');
-            var listInputText = inputText.split('');
-            
-            console.log(listInputText);
-            console.log(listClefRepete);
-            chiffrer(listInputText, listClefRepete, listAlphabet);
         }
 
         function goDechiffrer(){
             var inputText = document.getElementById('inputTextD').value;
             var inputClef = document.getElementById('inputClefD').value;
+            if(inputClef !== null && inputClef !== ''){
             var clefRepete = clefSurLongueurInput(inputText, inputClef);
             
             var listClefRepete = clefRepete.split('');
             var listAlphabet = alphabet.split('');
             var listInputText = inputText.split('');
             
-            deChiffrer(listInputText, listClefRepete, listAlphabet);            
+            deChiffrer(listInputText, listClefRepete, listAlphabet);
+            }            
         }
 
         function clefSurLongueurInput(texte, clef) {
@@ -84,9 +92,9 @@
                         var indexLettreATraiter = alphabetList.indexOf(textList[i]);
                         var indexClef = alphabetList.indexOf(clefListe[i]);
                         indexLettreTraite = ((indexLettreATraiter + indexClef) % lenAlphabet + lenAlphabet) % lenAlphabet;
-                        console.log("chiffrer - indexLettreTraite - " + indexLettreTraite);
-                        console.log("chiffrer - alphabetList[indexLettreTraite] - " + alphabetList[indexLettreTraite]);
+                       
                         texteChiffre += alphabetList[indexLettreTraite];
+                        //console.log(i+" - chiffrer - indexLettreTraite : " + indexLettreTraite + " - alphabetList[indexLettreTraite] : " + alphabetList[indexLettreTraite]+" - texteChiffre : " + texteChiffre);
                     }
                 }
             }
@@ -117,6 +125,7 @@
                         indexLettreTraite = ((indexLettreATraiter - indexClef) % lenAlphabet + lenAlphabet) % lenAlphabet;
                         //console.log(indexLettreTraite);
                         texteDechiffre += alphabetList[indexLettreTraite];
+                        //console.log(i+" - Déchiffrer - indexLettreTraite : " + indexLettreTraite + " : " + alphabetList[indexLettreTraite]+ " - indexClef : "+indexClef+" - texteDechiffre : " + texteDechiffre );
                     }
                 }
             }
