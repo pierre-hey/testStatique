@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <fieldset>
+        <legend>Chiffrer</legend>
+        <input type="text" name="inputTextC" id="inputTextC">
+        <input type="text" name="inputClefC" id="inputClefC">
+        <button onclick="goChiffrer()">Chiffrer</button>
+        <div id="resultC"></div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Chiffrer</legend>
+        <input type="text" name="inputTextD" id="inputTextD">
+        <input type="text" name="inputClefD" id="inputClefD">
+        <button onclick="goDechiffrer()">Déchiffrer</button>
+        <div id="resultD"></div>
+    </fieldset>
+
+
+    <script>
+        //const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789";
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789'&\$£€\"âäàéèêëîïöôûüùçÇ\\#{([-|`_^@)]=+}~¨¤%*µ?,;.:/!§°";
+        // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789'&\$£€\"âäàéèêëîïöôûüùçÇ\\#{([-|`_^@)]=+}~¨¤%*µ?,;.:/!§°
+
+        
+        function goChiffrer() {
+            var inputText = document.getElementById('inputTextC').value;
+            var inputClef = document.getElementById('inputClefC').value;
+            var clefRepete = clefSurLongueurInput(inputText, inputClef);
+            
+            var listClefRepete = clefRepete.split('');
+            var listAlphabet = alphabet.split('');
+            var listInputText = inputText.split('');
+            
+            chiffrer(listInputText, listClefRepete, listAlphabet);
+        }
+
+        function goDechiffrer(){
+            var inputText = document.getElementById('inputTextD').value;
+            var inputClef = document.getElementById('inputClefD').value;
+            var clefRepete = clefSurLongueurInput(inputText, inputClef);
+            
+            var listClefRepete = clefRepete.split('');
+            var listAlphabet = alphabet.split('');
+            var listInputText = inputText.split('');
+            
+            deChiffrer(listInputText, listClefRepete, listAlphabet);            
+        }
+
+        function clefSurLongueurInput(texte, clef) {
+            var clefRepete = "";
+            while (clefRepete.length < texte.length) {
+                clefRepete += clef
+            }
+            while (clefRepete.length > texte.length) {
+                clefRepete = clefRepete.slice(0, -1);
+            }
+            return clefRepete;
+        }
+
+        function chiffrer(textList, clefListe, alphabetList) {
+            var lenTexte = textList.length;
+            var lenAlphabet = alphabetList.length;
+            var motChiffre = "";
+            var texteChiffre = "";
+
+            for (var i = 0; i < lenTexte; i++) {
+                alphabetList.forEach(myFunction);
+
+                function myFunction(item) {
+
+                    if (textList[i] == item) {
+                        var indexLettreATraiter = alphabetList.indexOf(textList[i]);
+                        var indexClef = alphabetList.indexOf(clefListe[i]);
+                        indexLettreTraite = ((indexLettreATraiter + indexClef) % lenAlphabet) % lenAlphabet;
+                        texteChiffre += alphabetList[indexLettreTraite];
+                    }
+                }
+            }
+
+
+            var p3 = document.createElement("p");
+            p3.innerHTML = texteChiffre;
+            document.getElementById("resultC").appendChild(p3);
+        }
+
+
+
+
+        function deChiffrer(textList, clefListe, alphabetList) {
+            var lenTexte = textList.length;
+            var lenAlphabet = alphabetList.length;
+            var motChiffre = "";
+            var texteDechiffre =""; 
+
+            for (var i = 0; i < lenTexte; i++) {
+                alphabetList.forEach(myFunction);
+
+                function myFunction(item) {
+                    if (textList[i] == item) {
+                        var indexLettreATraiter = alphabetList.indexOf(textList[i]);
+                        var indexClef = alphabetList.indexOf(clefListe[i]);
+
+                        indexLettreTraite = ((indexLettreATraiter - indexClef) % lenAlphabet) % lenAlphabet;
+                        texteDechiffre += alphabetList[indexLettreTraite];
+                    }
+                }
+            }
+
+            var p4 = document.createElement("p");
+            p4.innerHTML = texteDechiffre;
+
+            document.getElementById("resultD").appendChild(p4);
+        }
+    </script>
+</body>
+
+</html>
