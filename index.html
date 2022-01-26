@@ -28,7 +28,7 @@
 
     <script>
         //const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789";
-        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789'&\$£€\"âäàéèêëîïöôûüùçÇ\\#{([-|`_^@)]=+}~¨¤%*µ?,;.:/!§°";
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789'&$£€\"âäàéèêëîïöôûüùçÇ\\#{([-|`_^@)]=+}~¨¤%*µ?,;.:/!§°";
         // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789'&\$£€\"âäàéèêëîïöôûüùçÇ\\#{([-|`_^@)]=+}~¨¤%*µ?,;.:/!§°
 
         
@@ -110,7 +110,8 @@
                         var indexLettreATraiter = alphabetList.indexOf(textList[i]);
                         var indexClef = alphabetList.indexOf(clefListe[i]);
 
-                        indexLettreTraite = ((indexLettreATraiter - indexClef) % lenAlphabet) % lenAlphabet;
+                        indexLettreTraite = ((indexLettreATraiter - indexClef) % lenAlphabet) + lenAlphabet;
+                        //console.log(indexLettreTraite);
                         texteDechiffre += alphabetList[indexLettreTraite];
                     }
                 }
