@@ -41,6 +41,8 @@
             var listAlphabet = alphabet.split('');
             var listInputText = inputText.split('');
             
+            console.log(listInputText);
+            console.log(listClefRepete);
             chiffrer(listInputText, listClefRepete, listAlphabet);
         }
 
@@ -81,7 +83,9 @@
                     if (textList[i] == item) {
                         var indexLettreATraiter = alphabetList.indexOf(textList[i]);
                         var indexClef = alphabetList.indexOf(clefListe[i]);
-                        indexLettreTraite = ((indexLettreATraiter + indexClef) % lenAlphabet) % lenAlphabet;
+                        indexLettreTraite = ((indexLettreATraiter + indexClef) % lenAlphabet + lenAlphabet) % lenAlphabet;
+                        console.log("chiffrer - indexLettreTraite - " + indexLettreTraite);
+                        console.log("chiffrer - alphabetList[indexLettreTraite] - " + alphabetList[indexLettreTraite]);
                         texteChiffre += alphabetList[indexLettreTraite];
                     }
                 }
@@ -110,7 +114,7 @@
                         var indexLettreATraiter = alphabetList.indexOf(textList[i]);
                         var indexClef = alphabetList.indexOf(clefListe[i]);
 
-                        indexLettreTraite = ((indexLettreATraiter - indexClef) % lenAlphabet) + lenAlphabet;
+                        indexLettreTraite = ((indexLettreATraiter - indexClef) % lenAlphabet + lenAlphabet) % lenAlphabet;
                         //console.log(indexLettreTraite);
                         texteDechiffre += alphabetList[indexLettreTraite];
                     }
